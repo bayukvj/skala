@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: skala
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3000
+    healthCheckPath: /api/health
+    autoDeploy: true
+
+# Catatan:
+# - Render free tier: server "sleep" setelah 15 menit tidak aktif
+#   (bangun otomatis saat diakses, ~30 detik cold start)
+# - SQLite disimpan di disk ephemeral. Data akan RESET saat redeploy.
+#   Untuk data persisten, upgrade ke Starter ($7/bulan) dengan disk,
+#   atau pindah ke PostgreSQL.
+# - Untuk data persisten di free tier, lihat catatan di README.

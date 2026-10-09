@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skala — Login</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4f46e5 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+    }
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .login-brand .brand-logo {
+      width: 48px; height: 48px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 24px; color: white;
+    }
+    .login-brand h1 { font-size: 24px; font-weight: 800; color: var(--gray-900); }
+    .login-subtitle { color: var(--gray-500); font-size: 13px; margin-bottom: 28px; }
+    .login-error {
+      background: var(--danger-light);
+      color: #991b1b;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .login-error.show { display: block; }
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .login-btn:hover { background: var(--primary-dark); }
+    .login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .login-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-brand">
+      <div class="brand-logo">S</div>
+      <h1>Skala</h1>
+    </div>
+    <p class="login-subtitle">Manajemen Keuangan Bisnis</p>
+
+    <div class="login-error" id="login-error"></div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-control" name="username" id="username" required autocomplete="username" autofocus>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" id="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="login-btn" id="login-btn">Masuk</button>
+    </form>
+
+    <div class="login-footer">
+      Belum punya akun? Hubungi administrator
+    </div>
+  </div>
+
+  <script>
+    // Jika sudah login, redirect ke dashboard
+    if (localStorage.getItem('skala_user')) {
+      location.href = '/';
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById('login-btn');
+      const errEl = document.getElementById('login-error');
+      errEl.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Memeriksa...';
+
+      try {
+        const res = await fetch('/api/users/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: form.username.value,
+            password: form.password.value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login gagal');
+
+        // Simpan session
+        localStorage.setItem('skala_user', JSON.stringify(data.user));
+        location.href = '/';
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Masuk';
+      }
+    });
+  </script>
+</body>
+</html>

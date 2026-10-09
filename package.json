@@ -1,0 +1,21 @@
+{
+  "name": "skala",
+  "version": "1.0.0",
+  "description": "Aplikasi manajemen keuangan bisnis - uang masuk/keluar, piutang, hutang, jurnal buku besar, laba rugi, dan kesehatan bisnis.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node db/seed.js"
+  },
+  "keywords": ["accounting", "finance", "business", "indonesia"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "helmet": "^8.1.0"
+  }
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skala — Manajemen Keuangan Bisnis</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">S</div>
+        <div>
+          <h1>Skala</h1>
+          <p>Manajemen Keuangan</p>
+        </div>
+        <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Tutup">✕</button>
+      </div>
+      <nav class="nav">
+        <a href="#/" data-nav="dashboard" class="nav-item active">
+          <span class="nav-icon">📊</span> Dashboard
+        </a>
+
+        <div class="nav-section">Transaksi</div>
+        <a href="#/transactions" data-nav="transactions" class="nav-item">
+          <span class="nav-icon">💰</span> Uang Masuk & Keluar
+        </a>
+        <a href="#/invoices" data-nav="invoices" class="nav-item">
+          <span class="nav-icon">🧾</span> Invoice
+        </a>
+        <a href="#/payroll" data-nav="payroll" class="nav-item">
+          <span class="nav-icon">💳</span> Payroll
+        </a>
+
+        <div class="nav-section">Piutang & Hutang</div>
+        <a href="#/receivables" data-nav="receivables" class="nav-item">
+          <span class="nav-icon">🧾</span> Piutang
+        </a>
+        <a href="#/payables" data-nav="payables" class="nav-item">
+          <span class="nav-icon">📄</span> Hutang
+        </a>
+
+        <div class="nav-section">Bisnis</div>
+        <a href="#/projects" data-nav="projects" class="nav-item">
+          <span class="nav-icon">📁</span> Proyek
+        </a>
+        <a href="#/journals" data-nav="journals" class="nav-item">
+          <span class="nav-icon">📒</span> Jurnal & Buku Besar
+        </a>
+        <a href="#/reports" data-nav="reports" class="nav-item">
+          <span class="nav-icon">📈</span> Laporan
+        </a>
+
+        <div class="nav-section">Master Data</div>
+        <a href="#/customers" data-nav="customers" class="nav-item">
+          <span class="nav-icon">👤</span> Pelanggan
+        </a>
+        <a href="#/suppliers" data-nav="suppliers" class="nav-item">
+          <span class="nav-icon">🏢</span> Supplier
+        </a>
+        <a href="#/products" data-nav="products" class="nav-item">
+          <span class="nav-icon">📦</span> Produk
+        </a>
+        <a href="#/warehouses" data-nav="warehouses" class="nav-item">
+          <span class="nav-icon">🏭</span> Warehouse
+        </a>
+
+        <div class="nav-section">Pengaturan</div>
+        <a href="#/accounts" data-nav="accounts" class="nav-item">
+          <span class="nav-icon">🗂️</span> Akun (COA)
+        </a>
+        <a href="#/users" data-nav="users" class="nav-item">
+          <span class="nav-icon">👥</span> Pengguna
+        </a>
+        <a href="#/roles" data-nav="roles" class="nav-item">
+          <span class="nav-icon">🛡️</span> Role
+        </a>
+        <a href="#/settings" data-nav="settings" class="nav-item">
+          <span class="nav-icon">⚙️</span> Pengaturan
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <small>Skala v1.0 • Double-entry</small>
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px;width:100%;color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.2)" onclick="logout()">🚪 Keluar</button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div style="display:flex;align-items:center;gap:8px">
+          <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+          <h2 id="page-title">Dashboard</h2>
+        </div>
+        <div class="topbar-actions">
+          <span id="company-name" class="company-name"></span>
+        </div>
+      </header>
+      <div id="app-content" class="content">
+        <div class="loading">Memuat...</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title"></h3>
+        <button class="btn-icon" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <div id="sidebar-overlay" class="sidebar-overlay hidden" onclick="toggleSidebar()"></div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/pages/dashboard.js"></script>
+  <script src="/js/pages/journals.js"></script>
+  <script src="/js/pages/transactions.js"></script>
+  <script src="/js/pages/receivables.js"></script>
+  <script src="/js/pages/invoices.js"></script>
+  <script src="/js/pages/payroll.js"></script>
+  <script src="/js/pages/payables.js"></script>
+  <script src="/js/pages/projects.js"></script>
+  <script src="/js/pages/reports.js"></script>
+  <script src="/js/pages/customers.js"></script>
+  <script src="/js/pages/suppliers.js"></script>
+  <script src="/js/pages/products.js"></script>
+  <script src="/js/pages/warehouses.js"></script>
+  <script src="/js/pages/accounts.js"></script>
+  <script src="/js/pages/users.js"></script>
+  <script src="/js/pages/roles.js"></script>
+  <script src="/js/pages/settings.js"></script>
+</body>
+</html>
